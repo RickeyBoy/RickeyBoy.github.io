@@ -63,8 +63,7 @@
     <script src="/js/util.js"></script>
     <script src="/js/main.js"></script>
 	
-<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
     
 		
 <!-- Layouts -->
@@ -211,7 +210,7 @@
 <p>第一幅图为传统的实现方式，依赖关系被创建直接在高层次对象（Button）上，当你需要改变低层次对象（Lamp）时，你必须要同时更改其父类（Button），如果此时有多个低层次的对象继承自父类（Button），那么更改其父类就变得十分困难。而第二幅图是符合DIP原则的方式，高层对象（Button）把需求抽象为一个抽象接口（ButtonServer），而具体实现（Lamp）依赖于这个抽象接口。同时，当需要实现多个底层对象时，只需要在具体实现时进行不同的实现即可。</p>
 <h5 id="解耦-Protocol-Oriented-Programming-面向协议编程"><a href="#解耦-Protocol-Oriented-Programming-面向协议编程" class="headerlink" title="解耦 - Protocol Oriented Programming 面向协议编程"></a>解耦 - Protocol Oriented Programming 面向协议编程</h5><p>面向协议编程中，Protocol 实际上就是 DIP 中的抽象接口。通过之前的讲解，采用面向协议的方式进行编程，即是对依赖反转原则 DIP 的践行，在一定程度上<strong>降低代码的耦合性</strong>，避免耦合性过高带来的问题。下面通过一个具体实例简单讲解一下：</p>
 <p>首先是高层次结构的实现，创建EmmettBrown的类，然后声明了一个需求（travelInTime方法）。</p>
-<pre class="line-numbers language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 高层次实现 - EmmettBrown</span>
+<pre class=" language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 高层次实现 - EmmettBrown</span>
 <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">EmmettBrown</span> <span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token keyword">let</span> timeMachine<span class="token punctuation">:</span> <span class="token builtin">TimeTraveling</span>
     <span class="token keyword">init</span><span class="token punctuation">(</span>timeMachine<span class="token punctuation">:</span> <span class="token builtin">TimeTraveling</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -221,27 +220,27 @@
         <span class="token keyword">return</span> timeMachine<span class="token punctuation">.</span><span class="token function">travelInTime</span><span class="token punctuation">(</span>time<span class="token punctuation">:</span> time<span class="token punctuation">)</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>采用 Protocol 定义抽象接口 travelInTime，低层次的实现将需要依赖这个接口。</p>
-<pre class="line-numbers language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 抽象接口 - 时光旅行</span>
+<pre class=" language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 抽象接口 - 时光旅行</span>
 protocol <span class="token builtin">TimeTraveling</span> <span class="token punctuation">{</span>
     <span class="token keyword">func</span> <span class="token function">travelInTime</span><span class="token punctuation">(</span>time<span class="token punctuation">:</span> <span class="token builtin">TimeInterval</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">String</span>
 <span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>最后是低层次实现，创建DeLorean类，通过遵循TimeTraveling协议，完成TravelInTime抽象接口的具体实现。</p>
-<pre class="line-numbers language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 低层次实现 - DeLorean</span>
+<pre class=" language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 低层次实现 - DeLorean</span>
 <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">DeLorean</span><span class="token punctuation">:</span> <span class="token builtin">TimeTraveling</span> <span class="token punctuation">{</span>
     <span class="token keyword">func</span> <span class="token function">travelInTime</span><span class="token punctuation">(</span>time<span class="token punctuation">:</span> <span class="token builtin">TimeInterval</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">String</span> <span class="token punctuation">{</span>
         <span class="token keyword">return</span> <span class="token string">"Used Flux Capacitor and travelled in time by: <span class="token interpolation"><span class="token delimiter variable">\(</span>time<span class="token delimiter variable">)</span></span>s"</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>使用的时候只需要创建相关类即可调用其方法。</p>
-<pre class="line-numbers language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 使用方式</span>
+<pre class=" language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">// 使用方式</span>
 <span class="token keyword">let</span> timeMachine <span class="token operator">=</span> <span class="token function">DeLorean</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token keyword">let</span> mastermind <span class="token operator">=</span> <span class="token function">EmmettBrown</span><span class="token punctuation">(</span>timeMachine<span class="token punctuation">:</span> timeMachine<span class="token punctuation">)</span>
 mastermind<span class="token punctuation">.</span><span class="token function">travelInTime</span><span class="token punctuation">(</span>time<span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">3600</span> <span class="token operator">*</span> <span class="token number">8760</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://developer.apple.com/videos/play/wwdc2015/408/" target="_blank" rel="noopener">WWDC - Protocol-Oriented Programming in Swift</a></li>
 <li><a href="https://github.com/ochococo/OOD-Principles-In-Swift">Github - OOD-Principles-In-Swift</a></li>
