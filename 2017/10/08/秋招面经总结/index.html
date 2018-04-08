@@ -63,7 +63,8 @@
     <script src="/js/util.js"></script>
     <script src="/js/main.js"></script>
 	
-</head>
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
     
 		
 <!-- Layouts -->
@@ -139,18 +140,28 @@
 <p>内推投了携程，通过了测评。然后进入了漫长的等待，某周打电话跟我说，问我能不能去上海面试，我说我在北京实习，能不能远程面试。hr倒是很爽快的答应了，并且约定两天后面试……</p>
 <p>然而，就此被鸽，进入了漫长的等待期。后来给携程校招组发反馈，终于获得了面试机会，两轮面试感觉答得还行，题也不是很难，然而就那么突然有一天gg了。</p>
 <h2 id="携程面试题"><a href="#携程面试题" class="headerlink" title="携程面试题"></a>携程面试题</h2><h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><ol>
-<li><p>请看下面一段代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static int a = 1;</span><br><span class="line">int main()&#123;</span><br><span class="line"> int m = 2;</span><br><span class="line"> char *n = NULL;</span><br><span class="line"> l = (char *)malloc(100 * sizeof(char));</span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>请问访问m,n,l 3种类型变量的效率从高到低依次是（）<br>A. lnm<br>B. mnl<br>C. mln<br>D. nlm</p>
-</li>
+<li>请看下面一段代码<pre><code>static int a = 1;
+int main(){
+ int m = 2;
+ char *n = NULL;
+ l = (char *)malloc(100 * sizeof(char));
+ return 0;
+}
+</code></pre>请问访问m,n,l 3种类型变量的效率从高到低依次是（）<br>A. lnm<br>B. mnl<br>C. mln<br>D. nlm</li>
 <li>请写出一个单例</li>
 <li>请写出程序计算结果<br>AB两地相距1000米，小明从A地点以30米/分钟的速度向B地点走，小白从B地点以20米/分钟的速度向A地点走，两人同时出发，用代码写出他们多少分钟后遇到？</li>
 <li>请写出程序输出结果<br>对数组 [“12-12”,”12-11”, “12-11”, “12-11”, “12-13”, “12-14”] 去重同时进行排序</li>
 <li>使用递归方法计算99到1相加的计算结果。是否了解无尾随递归？</li>
 <li>请看下面一段代码</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    dispatch_queue_t queue1 = dispatch_get_main_queue();</span><br><span class="line">    dispatch_async(queue1, ^&#123;NSLog(@&quot;222 Hello?&quot;);&#125;);</span><br><span class="line">    NSLog(@&quot;aaaaaaa&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>程序结果将输出<br>A. 死锁<br>B. 打印“aaaaaaa<br>222 Hello?”<br>C. 打印“222 Hello?<br>aaaaaaa”<br>D. 打印“”</p>
+<pre><code>- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    dispatch_queue_t queue1 = dispatch_get_main_queue();
+    dispatch_async(queue1, ^{NSLog(@&quot;222 Hello?&quot;);});
+    NSLog(@&quot;aaaaaaa&quot;);
+}
+</code></pre><p>程序结果将输出<br>A. 死锁<br>B. 打印“aaaaaaa<br>222 Hello?”<br>C. 打印“222 Hello?<br>aaaaaaa”<br>D. 打印“”</p>
 <h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><ol>
 <li>请说一说UITableView的重用机制</li>
 <li>请说一说你对Objective-C中property字段的了解</li>
