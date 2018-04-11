@@ -120,7 +120,7 @@
 </nav>
 
         <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://github.com/RickeyBoy/Rickey-iOS-Notes/blob/master/图床/Blog_Header_Protocol.png?raw=true);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(http://p6z7avd1u.bkt.clouddn.com/Blog_Header_Protocol.png);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
                 <a href="#" style="padding: 4rem 4rem 2rem 4rem;"><h2 >Swift Protocol 详解</h2></a>
             </div>
             <!-- Post -->
@@ -176,16 +176,16 @@
 </ul>
 </li>
 </ul>
-<h4 id="Classes-的问题："><a href="#Classes-的问题：" class="headerlink" title="Classes 的问题："></a>Classes 的问题：</h4><h5 id="1-Implicit-Sharing-隐式共享"><a href="#1-Implicit-Sharing-隐式共享" class="headerlink" title="1. Implicit Sharing 隐式共享:"></a>1. Implicit Sharing 隐式共享:</h5><p><img src="https://github.com/RickeyBoy/Rickey-iOS-Notes/blob/master/图床/Blog_Protocol/1.png?raw=true" width="200"></p>
+<h4 id="Classes-的问题："><a href="#Classes-的问题：" class="headerlink" title="Classes 的问题："></a>Classes 的问题：</h4><h5 id="1-Implicit-Sharing-隐式共享"><a href="#1-Implicit-Sharing-隐式共享" class="headerlink" title="1. Implicit Sharing 隐式共享:"></a>1. Implicit Sharing 隐式共享:</h5><p><img src="http://p6z7avd1u.bkt.clouddn.com/18-4-11/43918623.jpg" width="200"></p>
 <p>可能会导致大量保护性拷贝（Defensive Copy），导致效率降低；也有可能发生竞争条件（race condition），出现不可预知的错误；为了避免race condition，需要使用锁（Lock），但是这更会导致代码效率降低，并且有可能导致死锁（Dead Lock）</p>
 <h5 id="2-Inheritance-All-全部继承："><a href="#2-Inheritance-All-全部继承：" class="headerlink" title="2. Inheritance All 全部继承："></a>2. Inheritance All 全部继承：</h5><p>由于继承时，子类将继承父类全部的属性，所以有可能导致子类过于庞大，逻辑过于复杂。尤其是当父类具有存储属性（stored properties）的时候，子类必须全部继承，并且小心翼翼得初始化，避免损坏父类中的逻辑。如果需要重写（override）父类的方法，则必须要小心思考如何重写以及何时重写。</p>
-<h5 id="3-Lost-Type-Relationships-不能反应类型关系："><a href="#3-Lost-Type-Relationships-不能反应类型关系：" class="headerlink" title="3. Lost Type Relationships 不能反应类型关系："></a>3. Lost Type Relationships 不能反应类型关系：</h5><p><img src="https://github.com/RickeyBoy/Rickey-iOS-Notes/blob/master/图床/Blog_Protocol/2.jpeg?raw=true" width="300"></p>
+<h5 id="3-Lost-Type-Relationships-不能反应类型关系："><a href="#3-Lost-Type-Relationships-不能反应类型关系：" class="headerlink" title="3. Lost Type Relationships 不能反应类型关系："></a>3. Lost Type Relationships 不能反应类型关系：</h5><p><img src="http://p6z7avd1u.bkt.clouddn.com/18-4-11/67754658.jpg" width="300"></p>
 <p>上图中，两个类（Label、Number）拥有相同的父类（Ordered），但是在 Number 中调用 Order 类必须要使用强制解析（as！）来判断 Other 的属性，这样做既不优雅，也非常容易出Bug（如果 Other 碰巧为Label类）</p>
 <h2 id="Coupling-or-dependency-耦合性"><a href="#Coupling-or-dependency-耦合性" class="headerlink" title="Coupling or dependency 耦合性"></a>Coupling or dependency 耦合性</h2><blockquote>
 <p>采用面向协议编程的方式，可以在一定程度上降低代码的耦合性。</p>
 </blockquote>
 <p>耦合性是一种软件度量，是指一程序中，模块及模块之间信息或参数依赖的程度。高耦合性将使得维护成本变高，同时降低代码可复用程度。低耦合性是结构良好程序的特性，低耦合性程序的可读性及可维护性会比较好。</p>
-<h5 id="耦合级别"><a href="#耦合级别" class="headerlink" title="耦合级别"></a>耦合级别</h5><p><img src="https://github.com/RickeyBoy/Rickey-iOS-Notes/blob/master/图床/Blog_Protocol/3.jpeg?raw=true" width="300"></p>
+<h5 id="耦合级别"><a href="#耦合级别" class="headerlink" title="耦合级别"></a>耦合级别</h5><p><img src="http://p6z7avd1u.bkt.clouddn.com/18-4-11/25302226.jpg" width="300"></p>
 <p>图示是耦合程度由高到低，可粗略分为五个级别：</p>
 <ul>
 <li><strong>Content coupling</strong> 内容耦合：又称病态耦合，一个模块直接使用另一个模块的内部数据。</li>
@@ -205,7 +205,7 @@
 <li>高层次的模块不应该依赖于低层次的模块，两者都应该依赖于抽象接口。</li>
 <li>抽象接口不应该依赖于具体实现。而具体实现则应该依赖于抽象接口。</li>
 </ul>
-<p><img src="https://github.com/RickeyBoy/Rickey-iOS-Notes/blob/master/图床/Blog_Protocol/4.jpeg?raw=true" width="250"><br><img src="https://github.com/RickeyBoy/Rickey-iOS-Notes/blob/master/图床/Blog_Protocol/5.jpeg?raw=true" width="250"></p>
+<p><img src="http://p6z7avd1u.bkt.clouddn.com/18-4-11/30588395.jpg" width="250"><br><img src="http://p6z7avd1u.bkt.clouddn.com/18-4-11/60351939.jpg" width="250"></p>
 <p>举一个简单而经典的例子 – <strong>台灯和按钮</strong>。</p>
 <p>第一幅图为传统的实现方式，依赖关系被创建直接在高层次对象（Button）上，当你需要改变低层次对象（Lamp）时，你必须要同时更改其父类（Button），如果此时有多个低层次的对象继承自父类（Button），那么更改其父类就变得十分困难。而第二幅图是符合DIP原则的方式，高层对象（Button）把需求抽象为一个抽象接口（ButtonServer），而具体实现（Lamp）依赖于这个抽象接口。同时，当需要实现多个底层对象时，只需要在具体实现时进行不同的实现即可。</p>
 <h5 id="解耦-Protocol-Oriented-Programming-面向协议编程"><a href="#解耦-Protocol-Oriented-Programming-面向协议编程" class="headerlink" title="解耦 - Protocol Oriented Programming 面向协议编程"></a>解耦 - Protocol Oriented Programming 面向协议编程</h5><p>面向协议编程中，Protocol 实际上就是 DIP 中的抽象接口。通过之前的讲解，采用面向协议的方式进行编程，即是对依赖反转原则 DIP 的践行，在一定程度上<strong>降低代码的耦合性</strong>，避免耦合性过高带来的问题。下面通过一个具体实例简单讲解一下：</p>
@@ -241,9 +241,48 @@ protocol <span class="token builtin">TimeTraveling</span> <span class="token pun
 <span class="token keyword">let</span> mastermind <span class="token operator">=</span> <span class="token function">EmmettBrown</span><span class="token punctuation">(</span>timeMachine<span class="token punctuation">:</span> timeMachine<span class="token punctuation">)</span>
 mastermind<span class="token punctuation">.</span><span class="token function">travelInTime</span><span class="token punctuation">(</span>time<span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">3600</span> <span class="token operator">*</span> <span class="token number">8760</span><span class="token punctuation">)</span>
 </code></pre>
+<h2 id="Delegate-利用-Protocol-解耦"><a href="#Delegate-利用-Protocol-解耦" class="headerlink" title="Delegate - 利用 Protocol 解耦"></a>Delegate - 利用 Protocol 解耦</h2><blockquote>
+<p>Delegation is a design pattern that enables a class or structure to hand off (or delegate) some of its responsibilities to an instance of another type.</p>
+</blockquote>
+<p>委托（Delegate）是一种设计模式，表示将一个对象的部分功能转交给另一个对象。委托模式可以用来响应特定的动作，或者接收外部数据源提供的数据，而无需关心外部数据源的类型。部分情况下，Delegate 比起自上而下的继承具有更松的耦合程度，有效的减少代码的复杂程度。</p>
+<p>那么 Deleagte 和 Protocol 之间是什么关系呢？在 Swift 中，Delegate 就是基于 Protocol 实现的，定义 Protocol 来封装那些需要被委托的功能，这样就能确保遵循协议的类型能提供这些功能。</p>
+<p>Protocol 是 Swift 的语言特性之一，而 Delegate 是利用了 Protocol 来达到解耦的目的。</p>
+<h4 id="Delegate-使用实例："><a href="#Delegate-使用实例：" class="headerlink" title="Delegate 使用实例："></a>Delegate 使用实例：</h4><pre class=" language-swift"><code class="language-swift"><span class="token comment" spellcheck="true">//定义一个委托</span>
+protocol <span class="token builtin">CustomButtonDelegate</span><span class="token punctuation">:</span> <span class="token builtin">AnyObject</span><span class="token punctuation">{</span>
+    <span class="token keyword">func</span> <span class="token function">CustomButtonDidClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ACustomButton</span><span class="token punctuation">:</span> <span class="token builtin">UIView</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">weak</span> <span class="token keyword">var</span> delegate<span class="token punctuation">:</span> <span class="token builtin">ButtonDelegate</span><span class="token operator">?</span>
+    <span class="token keyword">func</span> <span class="token function">didClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        delegate<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">CustomButtonDidClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 遵循委托的类</span>
+<span class="token keyword">class</span> <span class="token class-name">ViewController</span><span class="token punctuation">:</span> <span class="token builtin">UIViewController</span><span class="token punctuation">,</span> <span class="token builtin">CustomButtonDelegate</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> view <span class="token operator">=</span> <span class="token function">ACustomButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        view<span class="token punctuation">.</span>delegate <span class="token operator">=</span> <span class="token keyword">self</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">func</span> <span class="token function">CustomButtonDidClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Delegation works!"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h4><p>如前所述，Delegate 的原理其实很简单。<code>ViewController</code> 会将 <code>ACustomButton</code> 的 <code>delegate</code> 设置为自己，同时自己遵循、实现了 <code>CustomButtonDelegate</code> 协议中的方法。这样在后者调用 <code>didClick</code> 方法的时候会调用 <code>CustomButtonDidClick</code> 方法，从而触发前者中对应的方法，从而打印出 Delegation works!</p>
+<h4 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h4><p>我们注意到，在声明委托时，我们使用了 <code>weak</code> 关键字。目的是在于避免循环引用。<code>ViewController</code> 拥有 <code>view</code>，而 <code>view.delegate</code> 又强引用了 <code>ViewController</code>，如果不将其中一个强引用设置为弱引用，就会造成循环引用的问题。</p>
+<h4 id="AnyObject"><a href="#AnyObject" class="headerlink" title="AnyObject"></a>AnyObject</h4><p>定义委托时，我们让  protocol 继承自  <code>AnyObject</code>。这是由于，在 Swift 中，这表示这一个协议只能被应用于 class（而不是 struct 和 enum）。</p>
+<p>实际上，如果让 protocol 不继承自任何东西，那也是可以的，这样定义的 Delegate 就可以被应用于 class 以及 struct、enum。由于 Delegate 代表的是遵循了该协议的实例，所以当 Delegate 被应用于 class 时，它就是 Reference type，需要考虑循环引用的问题，因此就必须要用 <code>weak</code> 关键字。</p>
+<p>但是这样的问题在于，当 Delegate 被应用于 struct 和 enum 时，它是 Value type，不需要考虑循环引用的问题，也不能被使用 <code>weak</code> 关键字。所以当 Delegate 未限定只能用于 class，Xcode 就会对 weak 关键字报错：<strong>‘weak’ may only be applied to class and class-bound protocol types</strong></p>
+<p>那么为什么不使用 class 和 NSObjectProtocol，而要使用 AnyObject 呢？NSObjectProtocol 来自 Objective-C，在 pure Swift 的项目中并不推荐使用。class 和 AnyObject 并没有什么区别，在 Xcode 中也能达到相同的功能，但是官方还是推荐使用 AnyObject。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://developer.apple.com/videos/play/wwdc2015/408/" target="_blank" rel="noopener">WWDC - Protocol-Oriented Programming in Swift</a></li>
 <li><a href="https://github.com/ochococo/OOD-Principles-In-Swift">Github - OOD-Principles-In-Swift</a></li>
+<li><a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html" target="_blank" rel="noopener">The Swift Programming Language - Protocol</a></li>
 </ul>
 
             </div>
