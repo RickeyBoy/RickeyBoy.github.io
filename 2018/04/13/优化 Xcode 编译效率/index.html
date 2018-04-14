@@ -310,15 +310,105 @@
 <p>这样写可读性会更好，但是会对编译器造成极大的负担。可以将具体内容写在注释中，这样改写：</p>
 <pre class=" language-swift"><code class="language-swift"><span class="token keyword">if</span> time <span class="token operator">></span> <span class="token number">1209600</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// 14 * 24 * 60 * 60</span>
 </code></pre>
-<h3 id="Build-Time-记录-1"><a href="#Build-Time-记录-1" class="headerlink" title="Build Time 记录"></a>Build Time 记录</h3><h5 id="减少类型推断"><a href="#减少类型推断" class="headerlink" title="减少类型推断"></a>减少类型推断</h5><p>在一个文件中，共减少了 2 处类型推断，一共优化 0.3ms，改进效果如下：<br>| – | 总时间 |<br>| :———–: |:—————:|<br>| 更改前 | 135.3 ms |<br>| 更改后 | 135.0 ms |</p>
+<h3 id="Build-Time-记录-1"><a href="#Build-Time-记录-1" class="headerlink" title="Build Time 记录"></a>Build Time 记录</h3><h5 id="减少类型推断"><a href="#减少类型推断" class="headerlink" title="减少类型推断"></a>减少类型推断</h5><p>在一个文件中，共减少了 2 处类型推断，一共优化 0.3ms，改进效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">–</th>
+<th style="text-align:center">总时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更改前</td>
+<td style="text-align:center">135.3 ms</td>
+</tr>
+<tr>
+<td style="text-align:center">更改后</td>
+<td style="text-align:center">135.0 ms</td>
+</tr>
+</tbody>
+</table>
 <p>所见 Xcode 对类型推断的处理优化还是效果很不错的，而且在声明阶段的类型推断实际上并不是很困难，因此提前声明类型其实对编译时间的优化效果影响不大。</p>
-<h5 id="减少使用-ternary-operator"><a href="#减少使用-ternary-operator" class="headerlink" title="减少使用 ternary operator"></a>减少使用 ternary operator</h5><p>在一个文件中，共减少了 2 处使用三目运算符的地方，一共优化 51.2ms，改进效果如下：<br>| – | 总时间 |<br>| :———–: |:—————:|<br>| 更改前 | 229.2 ms |<br>| 更改后 | 178.0 ms |</p>
+<h5 id="减少使用-ternary-operator"><a href="#减少使用-ternary-operator" class="headerlink" title="减少使用 ternary operator"></a>减少使用 ternary operator</h5><p>在一个文件中，共减少了 2 处使用三目运算符的地方，一共优化 51.2ms，改进效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">–</th>
+<th style="text-align:center">总时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更改前</td>
+<td style="text-align:center">229.2 ms</td>
+</tr>
+<tr>
+<td style="text-align:center">更改后</td>
+<td style="text-align:center">178.0 ms</td>
+</tr>
+</tbody>
+</table>
 <p>可见使用三目运算符的地方会对编译速度产生一定的影响，因此在不是特别需要的时候，出于编译时间的考虑可以改写为 if-else 语句。</p>
-<h5 id="减少使用-nil-coalescing-operator"><a href="#减少使用-nil-coalescing-operator" class="headerlink" title="减少使用 nil coalescing operator"></a>减少使用 nil coalescing operator</h5><p>在一个文件中，共减少了 5 处使用 nil coalescing operator 的地方，一共优化 2.8ms，具体改进效果如下：<br>| – | 总时间 |<br>| :———–: |:—————:|<br>| 更改前 | 386.4 ms |<br>| 更改后 | 178.0 ms |</p>
+<h5 id="减少使用-nil-coalescing-operator"><a href="#减少使用-nil-coalescing-operator" class="headerlink" title="减少使用 nil coalescing operator"></a>减少使用 nil coalescing operator</h5><p>在一个文件中，共减少了 5 处使用 nil coalescing operator 的地方，一共优化 2.8ms，具体改进效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">–</th>
+<th style="text-align:center">总时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更改前</td>
+<td style="text-align:center">386.4 ms</td>
+</tr>
+<tr>
+<td style="text-align:center">更改后</td>
+<td style="text-align:center">178.0 ms</td>
+</tr>
+</tbody>
+</table>
 <p>根据结果而言，优化效果并不显著。可是根据前文所述，nil coalescing operator 实际上是基于三目运算符的，那么为何优化效果反而不如三目运算符？据我推测，原因可能在于三目运算符只需要改写为 if-else 语句即可，而 nil coalescing operator 大部分时候需要先用 var 实现赋值语句，在使用 if-else 对赋值进行更改，所以总的来说优化效果不大。</p>
-<h5 id="字符串连接方式"><a href="#字符串连接方式" class="headerlink" title="字符串连接方式"></a>字符串连接方式</h5><p>在一个文件中，共改进了 7 处字符串的拼接方式，一共优化 73ms，具体改进效果如下：<br>| – | 总时间 |<br>| :———–: |:—————:|<br>| 更改前 | 696.1 ms |<br>| 更改后 | 623.1 ms |</p>
+<h5 id="字符串连接方式"><a href="#字符串连接方式" class="headerlink" title="字符串连接方式"></a>字符串连接方式</h5><p>在一个文件中，共改进了 7 处字符串的拼接方式，一共优化 73ms，具体改进效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">–</th>
+<th style="text-align:center">总时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更改前</td>
+<td style="text-align:center">696.1 ms</td>
+</tr>
+<tr>
+<td style="text-align:center">更改后</td>
+<td style="text-align:center">623.1 ms</td>
+</tr>
+</tbody>
+</table>
 <p>可见改进字符串的拼接方式效果还是十分明显的，而且也更符合 Swift 的语法规范，所以何乐而不为呢？</p>
-<h5 id="提前计算"><a href="#提前计算" class="headerlink" title="提前计算"></a>提前计算</h5><p>在一个文件中，进行了之前例子中的修改，一共优化 843.2ms，效果十分显著。具体改进效果如下：<br>| – | 总时间 |<br>| :———–: |:—————:|<br>| 更改前 | 1034.7 ms |<br>| 更改后 | 191.5 ms |</p>
+<h5 id="提前计算"><a href="#提前计算" class="headerlink" title="提前计算"></a>提前计算</h5><p>在一个文件中，进行了之前例子中的修改，一共优化 843.2ms，效果十分显著。具体改进效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">–</th>
+<th style="text-align:center">总时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更改前</td>
+<td style="text-align:center">1034.7 ms</td>
+</tr>
+<tr>
+<td style="text-align:center">更改后</td>
+<td style="text-align:center">191.5 ms</td>
+</tr>
+</tbody>
+</table>
 <h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
 <li><a href="https://swift.org/blog/whole-module-optimizations/" target="_blank" rel="noopener">Whole-Module Optimization in Swift 3</a></li>
 <li><a href="https://stackoverflow.com/questions/1027923/how-to-enable-build-timing-in-xcode/2801156#2801156" target="_blank" rel="noopener">How to enable build timing in Xcode? - Stack Overflow</a></li>
