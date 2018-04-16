@@ -6,7 +6,7 @@
 	<link rel="shortcut icon" href="/img/logo.png">
 	
 			    <title>
-    Diemension C-317
+    Diemension C-137
     </title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -168,7 +168,7 @@
 <span class="token punctuation">}</span>
 </code></pre>
 <p>将所有 <code>getElement</code> 函数被调用的地方都进行特殊化之后，函数的范型版本就可以被删除。这样，使用特殊化之后的 <code>getElement</code> 函数，编译器就可以进行进一步的优化。</p>
-<h4 id="SWIFT-WHOLE-MODULE-OPTIMIZATION-启用全模块优化"><a href="#SWIFT-WHOLE-MODULE-OPTIMIZATION-启用全模块优化" class="headerlink" title="SWIFT_WHOLE_MODULE_OPTIMIZATION 启用全模块优化"></a>SWIFT_WHOLE_MODULE_OPTIMIZATION 启用全模块优化</h4><p><strong>Build Setting -&gt; User-Defined</strong>，增加 key 为 <code>SWIFT_WHOLE_MODULE_OPTIMIZATION</code> value 设为 <code>YES</code>，<strong>进入工程文件设置 -&gt; Build Setting -&gt; Add User-Defined Settings</strong>，key 为 <code>SWIFT_WHOLE_MODULE_OPTIMIZATION</code>，value 设为 <code>YES</code> 就可以了。</p>
+<h4 id="SWIFT-WHOLE-MODULE-OPTIMIZATION-启用全模块优化"><a href="#SWIFT-WHOLE-MODULE-OPTIMIZATION-启用全模块优化" class="headerlink" title="SWIFT_WHOLE_MODULE_OPTIMIZATION 启用全模块优化"></a>SWIFT_WHOLE_MODULE_OPTIMIZATION 启用全模块优化</h4><p><strong>状态栏 -&gt; Editor -&gt; Build Setting -&gt; Add User-Defined Settings</strong>，然后增加 key 为 <code>SWIFT_WHOLE_MODULE_OPTIMIZATION</code>，value 为 <code>YES</code> 就可以了。</p>
 <h4 id="为什么-Swift-的编译器默认不是全模块优化？"><a href="#为什么-Swift-的编译器默认不是全模块优化？" class="headerlink" title="为什么 Swift 的编译器默认不是全模块优化？"></a>为什么 Swift 的编译器默认不是全模块优化？</h4><p>Swift 默认设置是 Debug 时只编译 active 架构，Build active architecture only，Xcode 默认就是这个设置。可以在 <strong>Build Settings</strong> –&gt; <strong>Build active architecture only</strong> 中检查到这一设置。</p>
 <p>也就是说，在对每一个文件单独进行编译时，编译器会缓存每个文件编译后的产物。这样的好处在于，如果之前编译过了一次，之后只改动了少部分文件的内容，影响范围不大，那么其他文件就不用重新编译，速度就会很快。</p>
 <p>而我们来看一看全模块优化的整体过程，包括：分析程序，类型检查，SIL 优化，LLVM 后端。而大多数情况下，前两项都是非常快速的。SIL 优化主要进行的是上文所说的函数內联、函数特殊化等优化，LLVM 后端采用多线程的方式对 SIL 优化的结果进行编译，生成底层代码。</p>
@@ -305,7 +305,12 @@
 <p>这样拼接字符串可行，但是 Swift 编译器并不青睐这样的写法，尽量改写成下面的方式。</p>
 <pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> totalString <span class="token operator">=</span> <span class="token string">"A<span class="token interpolation"><span class="token delimiter variable">\(</span>stringB<span class="token delimiter variable">)</span></span>C"</span>
 </code></pre>
-<h3 id="5-提前计算"><a href="#5-提前计算" class="headerlink" title="5. 提前计算"></a>5. 提前计算</h3><pre class=" language-swift"><code class="language-swift"><span class="token keyword">if</span> time <span class="token operator">></span> <span class="token number">14</span> <span class="token operator">*</span> <span class="token number">24</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<h3 id="5-改进转化字符串的方式"><a href="#5-改进转化字符串的方式" class="headerlink" title="5. 改进转化字符串的方式"></a>5. 改进转化字符串的方式</h3><pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> <span class="token builtin">StringA</span> <span class="token operator">=</span> <span class="token function">String</span><span class="token punctuation">(</span><span class="token builtin">IntA</span><span class="token punctuation">)</span>
+</code></pre>
+<p>这样拼接字符串可行，但是 Swift 编译器并不青睐这样的写法，尽量改写成下面的方式。</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> <span class="token builtin">StringA</span> <span class="token operator">=</span> <span class="token string">"<span class="token interpolation"><span class="token delimiter variable">\(</span><span class="token builtin">IntA</span><span class="token delimiter variable">)</span></span>"</span>
+</code></pre>
+<h3 id="6-提前计算"><a href="#6-提前计算" class="headerlink" title="6. 提前计算"></a>6. 提前计算</h3><pre class=" language-swift"><code class="language-swift"><span class="token keyword">if</span> time <span class="token operator">></span> <span class="token number">14</span> <span class="token operator">*</span> <span class="token number">24</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 </code></pre>
 <p>这样写可读性会更好，但是会对编译器造成极大的负担。可以将具体内容写在注释中，这样改写：</p>
 <pre class=" language-swift"><code class="language-swift"><span class="token keyword">if</span> time <span class="token operator">></span> <span class="token number">1209600</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// 14 * 24 * 60 * 60</span>
@@ -390,6 +395,25 @@
 </tbody>
 </table>
 <p>可见改进字符串的拼接方式效果还是十分明显的，而且也更符合 Swift 的语法规范，所以何乐而不为呢？</p>
+<h5 id="字符串转换方式"><a href="#字符串转换方式" class="headerlink" title="字符串转换方式"></a>字符串转换方式</h5><p>在一个文件中，进行了 5 处修改，一共优化 4952.5ms，效果十分显著。具体改进效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">–</th>
+<th style="text-align:center">总时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更改前</td>
+<td style="text-align:center">5106.2 ms</td>
+</tr>
+<tr>
+<td style="text-align:center">更改后</td>
+<td style="text-align:center">153.7 ms</td>
+</tr>
+</tbody>
+</table>
 <h5 id="提前计算"><a href="#提前计算" class="headerlink" title="提前计算"></a>提前计算</h5><p>在一个文件中，进行了之前例子中的修改，一共优化 843.2ms，效果十分显著。具体改进效果如下：</p>
 <table>
 <thead>
